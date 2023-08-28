@@ -7,9 +7,6 @@ const limit = 10
 let offset = 0
 
 
-
-
-
 function loadPokemonItems(offset, limit) {
 
     pokeApi.getPokemon(offset, limit).then((pokemons = []) => {
@@ -34,21 +31,22 @@ function loadPokemonItems(offset, limit) {
 loadPokemonItems(offset, limit)
 
 
-loadMoreButton.addEventListener('click', () => {
-    offset += limit
-    
-    const qtnRecordsWithNexPage = offset + limit
+function handleClick() {
+    offset += limit;
+    const qtnRecordsWithNextPage = offset + limit;
 
-    if (qtnRecordsWithNexPage >= maxRecords) {
-        const newLimit = maxRecords - offset
-        loadPokemonItems(offset, newLimit)
-
-        loadMoreButton.parentElement.removeChild(loadMoreButton)
+    if (qtnRecordsWithNextPage >= maxRecords) {
+        const newLimit = maxRecords - offset;
+        loadPokemonItems(offset, newLimit);
+        loadMoreButton.parentElement.removeChild(loadMoreButton);
     } else {
-        loadPokemonItems(offset, limit)
+        loadPokemonItems(offset, limit);
     }
 
-})
+}
+
+loadMoreButton.addEventListener('click', handleClick);
+
 
 
 
